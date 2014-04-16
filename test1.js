@@ -1,8 +1,5 @@
 window.onload = function() {
-  
-  var message = document.createEvent("Event");
-  message.initEvent("message",true,true);
-  message.act = "";
+ 
   
     // Tile class
   var Tile={
@@ -22,7 +19,7 @@ window.onload = function() {
     };
         tile.bind=function(elm){
         this.elm=elm;
-          elm.data(this);
+          
         };
     return tile;
       }
@@ -30,7 +27,7 @@ window.onload = function() {
   
   var cursor={
     currentTile:"",
-      elm:jQuery(),
+      elm:"",
     getTile:function(direction){
       //getTile at left/right/up/down/current
       
@@ -44,30 +41,35 @@ window.onload = function() {
     setToTile: function(tile){
       //resume old tile
       if(this.currentTile){
-        message.act="out";
-        this.elm.dispathEvent("message"); 
+          var message=new Event("message");
+       message.act="out";
+          
+        document.dispatchEvent(message); 
       }
       //set currentTile
       this.currentTile=tile;
-      message.act="hover";
-      this.elm.dispathEvent("message");
+        var message=new Event("message");
+    message.act="hover";
+      console.log(this.elm);
+      document.dispatchEvent(message);
     },
     bind:function(elm){
     this.elm=elm;
-      elm.data(this);
+     
     }
   };
   
   
   //bind elements  
-  cursor.bind($("#cursor"));
+  cursor.bind(document.getElementById("cursor"));
+  $("#cursor").data(cursor);
     
-  $(".grid-item, .list-item").each(function(e){
+  $(".grid-item, .list-item").each(function(index,e){
+   
   var tile = Tile.createNew();
     tile.bind(e);
-  });
-    
-  $(".grid-item, .list-item").bind("message",function(evt){
+    $(e).data(tile);
+    $(e).bind("message",function(evt){
     if("hover"==evt.act){
       this.onHover();
     }else if("out"==evt.act){
@@ -76,6 +78,9 @@ window.onload = function() {
     
     message.act="";
   },false);
+  });
+    
+ 
   
   //listen to arrow key
   $("#cursor").keydown(function(evt){
@@ -102,7 +107,7 @@ window.onload = function() {
   $("#cursor").click(function(evt){
     //if enter key
     if(evt.which==13){
-      this.currentTile.dispathEvent("click");
+      this.currentTile.dispatchEvent("click");
     }
   });
   
@@ -110,7 +115,7 @@ window.onload = function() {
    
     
     
-      $("#cursor").data().setToFile($(".grid-item")[0]);
+      $("#cursor").data().setToTile($(".grid-item")[0]);
       
   
   
