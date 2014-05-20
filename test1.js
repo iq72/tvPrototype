@@ -80,7 +80,7 @@ window.onload = function() {
   },false);
     //set default focus on first tile
     if(0==e){
-      tile.ohnHover();
+      tile.onHover();
     }
   });
     
