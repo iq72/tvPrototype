@@ -67,7 +67,7 @@ window.onload = function() {
   $(".grid-item, .list-item").each(function(index,e){
    
   var tile = Tile.createNew();
-    tile.bind(e);
+    tile.bind($(e));
     $(e).data(tile);
     $(e).bind("message",function(evt){
     if("hover"==evt.act){
