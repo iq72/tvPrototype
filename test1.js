@@ -78,9 +78,11 @@ window.onload = function() {
     
     message.act="";
   },false);
+    
   });
     
- 
+
+  
   
   //listen to arrow key
   $("#cursor").keydown(function(evt){
